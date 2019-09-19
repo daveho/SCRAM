@@ -36,6 +36,10 @@ public class SCRAM {
 		return accum;
 	}
 	
+	public int getPc() {
+		return pc;
+	}
+	
 	public boolean isHalted() {
 		return halted;
 	}
@@ -83,6 +87,7 @@ public class SCRAM {
 			if (accum == 0) {
 				pc = data;
 			}
+			break;
 		default:
 			throw new IllegalStateException("Illegal instruction code: " + code);
 		}
@@ -119,7 +124,7 @@ public class SCRAM {
 			}
 		} catch (Exception e) {
 			System.out.printf("Runtime error: %s\n", e.getMessage());
-			interrupted = false;
+			interrupted = true;
 		}
 		
 		if (interrupted) {
@@ -136,6 +141,6 @@ public class SCRAM {
 		for (int i = 0; i < 16; i++) {
 			System.out.printf(" %02x", scram.getMem(i));
 		}
-		System.out.printf(" A=%02x\n", scram.getAccum());
+		System.out.printf(" A=%02x PC=%x\n", scram.getAccum(), scram.getPc());
 	}
 }
